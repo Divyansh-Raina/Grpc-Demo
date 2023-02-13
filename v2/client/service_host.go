@@ -18,7 +18,7 @@ func ServiceHost(c pb.BillingServiceClient) {
 		fmt.Println("Select 6 to Update your credits")
 		fmt.Println("Select 7 to Get coupons")
 		fmt.Println("Select 8 to Add coupons")
-		fmt.Println("Select 9 to check Redeemed coupons")
+		fmt.Println("Select 9 to Redeem your coupons")
 		fmt.Println("Select 0 to Exit")
 		fmt.Print("Please select your choice:- ")
 		fmt.Scan(&choice)

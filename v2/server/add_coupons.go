@@ -2,10 +2,10 @@ package main
 
 import (
 	"context"
+	md "draina/demo/v2/model"
 	pb "draina/demo/v2/proto"
 	"fmt"
 	"log"
-	md "draina/demo/v2/model"
 
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -32,7 +32,7 @@ func (s *Server) AddCoupons(ctx context.Context, in *pb.CouponResponse) (*pb.OkM
 	if res.RowsAffected != 0 {
 		return &pb.OkMessage{
 			Result: "Coupon already Exists",
-		},nil
+		}, nil
 	}
 	res = db.Create(&coupon)
 	if res.Error != nil {
