@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option go_package = "draina/demo/v1/proto";
+
+enum Date{
+    UNSPECIFIED_VALUE = 0;
+    DAY = 1;
+    MONTH = 2;
+    YEAR = 3;
+}
+message AboutRequest{
+    uint32 id = 1;
+    string name = 2;
+    uint32 age = 3;
+    Date date = 4;
+}
+message AboutResponse{
+    string Result = 1;
+}
+
+service AboutService{
+    rpc About_Unary (AboutRequest) returns (AboutResponse);
+}
