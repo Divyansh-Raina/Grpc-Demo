@@ -64,4 +64,5 @@ service BillingService{
     rpc GetCoupons(CouponRequest) returns (stream CouponResponse);
     rpc AddCoupons(CouponResponse) returns (OkMessage);
     rpc RedeemCoupons(RedeemRequest) returns (OkMessage);
+    rpc ExportData(Account) returns (OkMessage);
 }

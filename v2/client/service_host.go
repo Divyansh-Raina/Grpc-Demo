@@ -10,17 +10,23 @@ func ServiceHost(c pb.BillingServiceClient) {
 	choice := 0
 	for {
 		fmt.Println("Welcome to Billing Admin Console! Please make your choice")
-		fmt.Println("Select 1 for Get User")
-		fmt.Println("Select 2 for Add User")
-		fmt.Println("Select 3 for Update User")
-		fmt.Println("Select 4 for Delete User")
-		fmt.Println("Select 5 to Get the amount of credits")
-		fmt.Println("Select 6 to Update your credits")
-		fmt.Println("Select 7 to Get coupons")
-		fmt.Println("Select 8 to Add coupons")
-		fmt.Println("Select 9 to Redeem your coupons")
-		fmt.Println("Select 0 to Exit")
-		fmt.Print("Please select your choice:- ")
+		fmt.Println("--------- User ------------")
+		fmt.Println("Enter (1) to Get User")
+		fmt.Println("Enter (2) to Add User")
+		fmt.Println("Enter (3) to Update User")
+		fmt.Println("Enter (4) to Delete User")
+		fmt.Println("--------- Credits ---------")
+		fmt.Println("Enter (5) to Get the amount of credits")
+		fmt.Println("Enter (6) to Update your credits")
+		fmt.Println("-------- Coupons ----------")
+		fmt.Println("Enter (7) to Get coupons")
+		fmt.Println("Enter (8) to Add coupons")
+		fmt.Println("Enter (9) to Redeem your coupons")
+		fmt.Println("------- Export ------------")
+		fmt.Println("Enter (10) to Export your data to file")
+		fmt.Println("--------------------------")
+		fmt.Println("Select (0) to Exit")
+		fmt.Print("Please enter your choice:- ")
 		fmt.Scan(&choice)
 		switch choice {
 		case 1:
@@ -41,6 +47,8 @@ func ServiceHost(c pb.BillingServiceClient) {
 			doAddCoupons(c)
 		case 9:
 			doRedeemCoupons(c)
+		case 10:
+			doExportData(c)
 		case 0:
 			log.Fatalf("Exiting the module!")
 		default:

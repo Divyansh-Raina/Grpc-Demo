@@ -1,0 +1,12 @@
+Id:10
+Code:jhksaalad
+Expiry:2023-03-30 09:57:39.547361367 +0000 UTC
+Redeem Time:2023-03-30 09:57:39.547361367 +0000 UTC
+Redeemed:false
+------
+Id:10
+Code:dsjldssf
+Expiry:2023-03-15 10:01:14.388245234 +0000 UTC
+Redeem Time:2023-03-15 10:01:14.388245234 +0000 UTC
+Redeemed:false
+------

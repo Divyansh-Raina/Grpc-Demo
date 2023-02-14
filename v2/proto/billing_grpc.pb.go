@@ -32,6 +32,7 @@ type BillingServiceClient interface {
 	GetCoupons(ctx context.Context, in *CouponRequest, opts ...grpc.CallOption) (BillingService_GetCouponsClient, error)
 	AddCoupons(ctx context.Context, in *CouponResponse, opts ...grpc.CallOption) (*OkMessage, error)
 	RedeemCoupons(ctx context.Context, in *RedeemRequest, opts ...grpc.CallOption) (*OkMessage, error)
+	ExportData(ctx context.Context, in *Account, opts ...grpc.CallOption) (*OkMessage, error)
 }
 
 type billingServiceClient struct {
@@ -146,6 +147,15 @@ func (c *billingServiceClient) RedeemCoupons(ctx context.Context, in *RedeemRequ
 	return out, nil
 }
 
+func (c *billingServiceClient) ExportData(ctx context.Context, in *Account, opts ...grpc.CallOption) (*OkMessage, error) {
+	out := new(OkMessage)
+	err := c.cc.Invoke(ctx, "/BillingService/ExportData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BillingServiceServer is the server API for BillingService service.
 // All implementations must embed UnimplementedBillingServiceServer
 // for forward compatibility
@@ -159,6 +169,7 @@ type BillingServiceServer interface {
 	GetCoupons(*CouponRequest, BillingService_GetCouponsServer) error
 	AddCoupons(context.Context, *CouponResponse) (*OkMessage, error)
 	RedeemCoupons(context.Context, *RedeemRequest) (*OkMessage, error)
+	ExportData(context.Context, *Account) (*OkMessage, error)
 	mustEmbedUnimplementedBillingServiceServer()
 }
 
@@ -192,6 +203,9 @@ func (UnimplementedBillingServiceServer) AddCoupons(context.Context, *CouponResp
 }
 func (UnimplementedBillingServiceServer) RedeemCoupons(context.Context, *RedeemRequest) (*OkMessage, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RedeemCoupons not implemented")
+}
+func (UnimplementedBillingServiceServer) ExportData(context.Context, *Account) (*OkMessage, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ExportData not implemented")
 }
 func (UnimplementedBillingServiceServer) mustEmbedUnimplementedBillingServiceServer() {}
 
@@ -371,6 +385,24 @@ func _BillingService_RedeemCoupons_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BillingService_ExportData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Account)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).ExportData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/BillingService/ExportData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).ExportData(ctx, req.(*Account))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // BillingService_ServiceDesc is the grpc.ServiceDesc for BillingService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -409,6 +441,10 @@ var BillingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RedeemCoupons",
 			Handler:    _BillingService_RedeemCoupons_Handler,
+		},
+		{
+			MethodName: "ExportData",
+			Handler:    _BillingService_ExportData_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
