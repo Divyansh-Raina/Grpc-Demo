@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package billing;
+
+option go_package = "draina/demo/v2/proto";
+
+import "account.proto";
+import "google/protobuf/timestamp.proto";
+
+
+message CouponRequest{
+    Account accid = 1;
+}
+message RedeemRequest{
+    Account accid = 1;
+    string code = 2;
+}
+message CouponResponse{
+    Account accid = 1;
+    string code = 2;
+    google.protobuf.Timestamp expiry = 3;
+    google.protobuf.Timestamp redeem_time = 4;
+    bool redeemed = 5;
+}

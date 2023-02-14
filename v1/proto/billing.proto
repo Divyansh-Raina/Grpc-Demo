@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+option go_package = "draina/demo/v2/proto";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+enum TOA{
+   TOA_UNSPECIFIED = 0;
+   TOA_FREE = 1;
+   TOA_DEVELOPER = 2;
+   TOA_INTEL = 3;
+   TOA_BUSINESS_T1 = 4;
+   TOA_BUSINESS_T2 = 5;
+}
+message Account{
+    uint64 id = 1;
+}
+
+message UserRequest{
+    Account accid = 1;
+}
+
+message UserResponse{
+    Account accid = 1;
+    string name = 2;
+    uint32 age = 3;
+    string type_of_acc = 4;
+}
+
+message CreditRequest{
+    Account accid = 1;
+}
+
+message CreditResponse{
+    Account accid = 1;
+   int32 no_of_credits = 2;
+   google.protobuf.Timestamp expiry = 3;
+}
+
+message CouponRequest{
+    Account accid = 1;
+}
+message RedeemRequest{
+    Account accid = 1;
+    string code = 2;
+}
+message CouponResponse{
+    Account accid = 1;
+    string code = 2;
+    google.protobuf.Timestamp expiry = 3;
+    google.protobuf.Timestamp redeem_time = 4;
+    bool redeemed = 5;
+}
+message OkMessage{
+    string Result = 1;
+}
+service BillingService{
+    rpc GetUserById(UserRequest) returns (UserResponse);
+    rpc AddUser(UserResponse) returns (OkMessage);
+    rpc UpdateUser (UserResponse) returns (google.protobuf.Empty);
+    rpc DeleteUser (UserRequest) returns (google.protobuf.Empty);
+    rpc GetCredits(CreditRequest) returns (CreditResponse);
+    rpc UpdateCredits(CreditResponse) returns (OkMessage);
+    rpc GetCoupons(CouponRequest) returns (stream CouponResponse);
+    rpc AddCoupons(CouponResponse) returns (OkMessage);
+    rpc RedeemCoupons(RedeemRequest) returns (OkMessage);
+    rpc ExportData(Account) returns (OkMessage);
+}

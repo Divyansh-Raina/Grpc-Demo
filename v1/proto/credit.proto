@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package billing;
+
+option go_package = "draina/demo/v2/proto";
+
+import "account.proto";
+import "google/protobuf/timestamp.proto";
+
+
+// service CreditService{
+//     rpc GetCredits(CreditRequest) returns (CreditResponse);
+//     rpc UpdateCredits(CreditResponse) returns (OkMessage);
+// }
+message CreditRequest{
+    Account accid = 1;
+}
+
+message CreditResponse{
+    Account accid = 1;
+   int32 no_of_credits = 2;
+   google.protobuf.Timestamp expiry = 3;
+}

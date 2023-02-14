@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package billing;
+
+option go_package = "draina/demo/v2/proto";
+
+import "account.proto";
+
+
+enum TOA{
+   TOA_UNSPECIFIED = 0;
+   TOA_FREE = 1;
+   TOA_DEVELOPER = 2;
+   TOA_INTEL = 3;
+   TOA_BUSINESS_T1 = 4;
+   TOA_BUSINESS_T2 = 5;
+}
+
+message UserRequest{
+    Account accid = 1;
+}
+
+message UserResponse{
+    Account accid = 1;
+    string name = 2;
+    uint32 age = 3;
+    string type_of_acc = 4;
+}
+
+
